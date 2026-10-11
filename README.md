@@ -251,6 +251,9 @@ geo-transformer/
 ## 快速开始
 
 ```bash
+直接打开网址https://bancott.github.io/GeoTransformer/即可
+
+如需下载源代码，可使用下面的命令调试
 npm install        # 安装依赖
 npm run dev        # 本地开发（默认 http://localhost:5173）
 npm run test       # 运行单元测试
