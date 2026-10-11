@@ -39,6 +39,11 @@ jobs:
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        with:
+          # 仓库若尚未开启 Pages，这里自动启用（build_type=workflow）。
+          # 不加这行时，Pages 未启用会让本步骤报
+          # "Get Pages site failed"，进而整个 workflow 失败。
+          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
