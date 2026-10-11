@@ -259,40 +259,6 @@ npm run preview    # 本地预览生产构建
 npm run typecheck  # 仅做类型检查
 ```
 
-## 部署
-
-`dist/` 里是纯静态产物，`base` 已设为相对路径（`./`），因此放在域名根目录或任意子路径下都能正常加载，可：
-
-- 直接扔到任意静态服务器 / 对象存储 / CDN；
-- 用 `npx serve dist` 或 `vite preview` 本地预览；
-- 托管到 GitHub Pages / Vercel / Netlify 等（无需后端）。
-
-### 部署到 GitHub Pages
-
-本仓库已内置工作流 [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml)：推送到 `main` 后自动执行 `npm ci && npm run build`，并把 `dist/` 发布到 Pages。
-
-假设 GitHub 用户名为 `Bancott`、仓库名为 `GeoTransformer`，则访问地址为：
-
-**https://bancott.github.io/GeoTransformer/**
-
-首次部署只需三步：
-
-1. 在 GitHub 上新建**公开**仓库 `GeoTransformer`（不要勾选自动生成 README，保持空仓库）；
-2. 本地推送代码：
-   ```bash
-   git init -b main
-   git add .
-   git commit -m "chore: initial commit"
-   git remote add origin https://github.com/Bancott/GeoTransformer.git
-   git push -u origin main
-   ```
-3. 打开仓库 **Settings → Pages → Build and deployment → Source**，选择 **GitHub Actions**（只需设置一次）。之后每次 `git push` 都会自动重新部署。
-
-> `base` 保持 `'./'` 是关键：若改成 `'/'`，子路径部署时所有 JS/CSS 会 404。
-> `public/.nojekyll` 用于在改用「Deploy from a branch」模式时阻止 Jekyll 处理产物。
->
-> 想要 `https://Bancott.github.io/` 这样的裸域名，仓库必须命名为 `Bancott.github.io`，本项目的相对路径配置同样适用，无需改动代码。
-
 ## 坐标基准说明
 
 - **高德底图**默认使用 GCJ-02 基准的瓦片。为保证地图上的数据仍以 WGS-84 为准且不发生偏移，`MapController` 在「显示」时把 WGS-84 坐标换算为 GCJ-02，点击/拾取时再换算回 WGS-84——源数据始终不变。
