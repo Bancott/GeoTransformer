@@ -283,8 +283,8 @@ body {
 .gt-trunc { color: var(--text-2); font-size: 13px; }
 
 /* ---------------------------- Map ---------------------------- */
-.gt-map { height: 440px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); background: var(--surface-sunken); }
-.gt-map--sm { height: 320px; }
+.gt-map { height: 520px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); background: var(--surface-sunken); }
+.gt-map--sm { height: 520px; }
 
 /* Leaflet 控件跟随主题（瓦片本身是数据，不随主题变化） */
 .leaflet-container { background: var(--surface-sunken); font-family: inherit; }
