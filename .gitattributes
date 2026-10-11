@@ -1,0 +1,13 @@
+# 统一换行符：Windows 开发 + Linux CI，避免 CRLF/LF 来回改动
+* text=auto eol=lf
+
+# 明确二进制类型，防止被当作文本处理
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.pdf binary

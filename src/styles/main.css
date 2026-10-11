@@ -1,0 +1,384 @@
+/**
+ * 组件样式层 —— 颜色一律引用 theme.css 中的语义变量，不写字面量。
+ * 变量定义见 src/styles/theme.css。
+ */
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  /* 主题切换时的过渡；加在根上避免逐个元素闪烁 */
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* 应用外壳固定为一屏高度：头部常驻，左右两栏各自滚动，页面本身不滚动 */
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* ---------------------------- Header ---------------------------- */
+.gt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 22px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 900;
+}
+.gt-brand { display: flex; align-items: center; gap: 12px; }
+.gt-brand__logo {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  color: var(--on-brand);
+  background: linear-gradient(135deg, var(--brand-fill), var(--brand-fill-hover));
+  border-radius: 12px;
+  box-shadow: 0 4px 10px var(--brand-shadow);
+}
+.gt-brand__text { min-width: 0; }
+.gt-brand__text h1 { margin: 0; font-size: 20px; letter-spacing: 0.3px; }
+.gt-brand__text p { margin: 2px 0 0; font-size: 12.5px; color: var(--text-2); }
+.gt-header__actions { display: flex; align-items: center; gap: 8px; }
+
+/* ---------------------------- Layout ---------------------------- */
+.gt-layout { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+.gt-sidebar {
+  width: 232px;
+  flex: 0 0 232px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 16px 12px;
+  overflow-y: auto;
+  /* 侧栏独立滚动，右侧主内容滚动时保持不动 */
+  overscroll-behavior: contain;
+}
+.gt-sidebar__nav { display: flex; flex-direction: column; }
+
+/* 分组：分类标题是纯标签，不参与交互（pointer-events: none 彻底杜绝误点） */
+.gt-nav-group { display: flex; flex-direction: column; gap: 2px; }
+.gt-nav-group + .gt-nav-group { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+.gt-cat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  color: var(--text-muted);
+  cursor: default;
+  user-select: none;
+  pointer-events: none;
+}
+.gt-cat__icon { width: 14px; text-align: center; font-size: 11px; opacity: 0.9; }
+.gt-nav-item {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  font-size: 14.5px;
+  font-weight: 500;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.gt-nav-item:hover { background: var(--surface-hover); }
+.gt-nav-item:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+.gt-nav-item--active { background: var(--brand-soft); color: var(--brand); font-weight: 600; }
+
+.gt-main { flex: 1; min-width: 0; padding: 22px 26px; overflow: auto; }
+.gt-tool-title { margin: 0 0 4px; font-size: 24px; }
+.gt-tool-sub { margin: 0 0 20px; color: var(--text-2); font-size: 14px; }
+.gt-tool-body { display: flex; flex-direction: column; }
+
+/* ---------------------------- Cards & Stack ---------------------------- */
+.gt-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.gt-card__head {
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-2);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-subtle);
+}
+.gt-card__body { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+
+.gt-stack { display: flex; flex-direction: column; gap: 16px; }
+.gt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.gt-inline { display: flex; gap: 12px; flex-wrap: wrap; }
+.gt-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.gt-note { margin: 0; font-size: 12.5px; color: var(--text-2); line-height: 1.6; }
+.gt-output { display: flex; flex-direction: column; gap: 12px; }
+.gt-result { margin-top: 12px; }
+.gt-toolbar { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+
+/* ---------------------------- Fields ---------------------------- */
+.gt-field { display: flex; flex-direction: column; gap: 6px; }
+.gt-field__label { font-size: 12.5px; font-weight: 600; color: var(--text-2); }
+.gt-field__hint { font-size: 11.5px; color: var(--text-2); }
+
+.gt-input {
+  width: 100%;
+  padding: 9px 11px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.gt-input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }
+.gt-input:disabled { background: var(--surface-disabled); color: var(--text-disabled); }
+.gt-textarea { resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; line-height: 1.5; }
+
+/* ---------------------------- Buttons ---------------------------- */
+.gt-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.gt-btn--primary { background: var(--brand-fill); color: var(--on-brand); }
+.gt-btn--primary:hover { background: var(--brand-fill-hover); }
+.gt-btn--primary:disabled { background: var(--brand-disabled); cursor: not-allowed; }
+.gt-btn--ghost { background: var(--surface); color: var(--text); border-color: var(--border); }
+.gt-btn--ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); }
+.gt-btn--danger { background: var(--danger-fill); color: var(--on-danger); }
+.gt-btn--donate { background: linear-gradient(135deg, var(--donate-from), var(--donate-to)); color: var(--on-brand); }
+.gt-btn--donate:hover { filter: brightness(1.05); }
+.gt-heart { color: var(--heart); }
+.gt-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+.gt-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+.gt-icon-btn {
+  appearance: none;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+/* ---------------------------- Segmented（主题切换等） ---------------------------- */
+.gt-segmented {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.gt-segmented__item {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 26px;
+  padding: 0 9px;
+  font-size: 12.5px;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--text-2);
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.gt-segmented__item:hover { color: var(--text); }
+.gt-segmented__item[aria-checked='true'] {
+  background: var(--surface);
+  color: var(--brand);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+.gt-segmented__item:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+.gt-segmented__icon { display: inline-flex; }
+
+/* ---------------------------- Dropzone ---------------------------- */
+.gt-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 26px 20px;
+  border: 2px dashed var(--border-dashed);
+  border-radius: var(--radius);
+  background: var(--surface-subtle);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.gt-dropzone:hover { border-color: var(--brand); background: var(--surface-tint); }
+.gt-dropzone--active { border-color: var(--brand); background: var(--surface-brand); }
+.gt-dropzone__label { font-size: 14.5px; font-weight: 600; color: var(--text); }
+.gt-dropzone__hint { font-size: 12px; color: var(--text-2); }
+
+/* ---------------------------- File info / Koord / detector ---------------------------- */
+.gt-fileinfo { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; background: var(--surface-tint); border: 1px solid var(--border-tint); border-radius: var(--radius-sm); }
+.gt-fileinfo__name { font-weight: 600; font-size: 14px; }
+.gt-fileinfo__meta { font-size: 12px; color: var(--text-2); }
+
+.gt-coord-card { display: flex; flex-direction: column; gap: 8px; background: var(--surface-sunken); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+.gt-coord-card__row { display: flex; justify-content: space-between; gap: 16px; }
+.gt-coord-card__row span { color: var(--text-2); font-size: 12.5px; }
+.gt-coord-card__row b { font-family: ui-monospace, monospace; font-size: 15px; }
+
+.gt-detector { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.gt-detector-badge { color: var(--on-brand); font-weight: 700; padding: 6px 16px; border-radius: 999px; font-size: 16px; }
+.gt-detector-badge--wgs84 { background: var(--sys-wgs84); }
+.gt-detector-badge--gcj02 { background: var(--sys-gcj02); }
+.gt-detector-badge--bd09 { background: var(--sys-bd09); }
+.gt-detector-badge--unknown { background: var(--sys-unknown); }
+.gt-detector-conf { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-2); }
+.gt-bar { width: 120px; height: 8px; border-radius: 999px; background: var(--track); overflow: hidden; display: inline-block; }
+.gt-bar__fill { display: block; height: 100%; background: var(--brand); border-radius: 999px; transition: width 0.4s; }
+
+/* ---------------------------- Table ---------------------------- */
+.gt-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.gt-table th, .gt-table td { padding: 7px 9px; border-bottom: 1px solid var(--border); text-align: left; }
+.gt-table th { position: sticky; top: 0; background: var(--surface-subtle); font-weight: 600; color: var(--text-2); white-space: nowrap; }
+.gt-table td { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gt-table tr:hover td { background: var(--surface-tint); }
+.gt-trunc { color: var(--text-2); font-size: 13px; }
+
+/* ---------------------------- Map ---------------------------- */
+.gt-map { height: 440px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); background: var(--surface-sunken); }
+.gt-map--sm { height: 320px; }
+
+/* Leaflet 控件跟随主题（瓦片本身是数据，不随主题变化） */
+.leaflet-container { background: var(--surface-sunken); font-family: inherit; }
+.leaflet-control-zoom a {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+.leaflet-control-zoom a:hover { background: var(--surface-hover); color: var(--text); }
+.leaflet-bar a.leaflet-disabled { background: var(--surface-disabled); color: var(--text-disabled); }
+.leaflet-control-attribution {
+  background: color-mix(in srgb, var(--surface) 82%, transparent) !important;
+  color: var(--text-2) !important;
+}
+.leaflet-control-attribution a { color: var(--brand) !important; }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--surface); color: var(--text); }
+
+.gt-readout { font-family: ui-monospace, monospace; font-size: 13px; color: var(--text-2); background: var(--surface-sunken); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+
+.gt-capture-list { display: flex; flex-direction: column; gap: 8px; max-height: 260px; overflow: auto; }
+.gt-capture-row { display: flex; align-items: center; gap: 10px; padding: 6px 10px; background: var(--surface-subtle); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.gt-capture-row__idx { width: 22px; height: 22px; display: grid; place-items: center; background: var(--brand-fill); color: var(--on-brand); border-radius: 50%; font-size: 12px; font-weight: 700; }
+.gt-capture-row__coord { font-family: ui-monospace, monospace; font-size: 13px; flex: 1; }
+
+/* 拾取标记 */
+.gt-pick-marker { position: relative; }
+.gt-pick-marker__dot { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); border: 3px solid var(--brand-fill); box-shadow: 0 0 0 3px var(--accent-soft); display: block; }
+
+/* ---------------------------- Toast ---------------------------- */
+.gt-toast-host { position: fixed; top: 74px; right: 20px; z-index: 1200; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+.gt-toast { display: flex; align-items: center; gap: 8px; min-width: 220px; max-width: 360px; padding: 10px 14px; border-radius: var(--radius-sm); background: var(--surface); box-shadow: var(--shadow-sm); border: 1px solid var(--border); opacity: 0; transform: translateX(12px); transition: all 0.25s; font-size: 13.5px; }
+.gt-toast--show { opacity: 1; transform: translateX(0); }
+.gt-toast--success { border-left: 4px solid var(--brand-fill); }
+.gt-toast--error { border-left: 4px solid var(--danger-fill); }
+.gt-toast--warning { border-left: 4px solid var(--accent); }
+.gt-toast--info { border-left: 4px solid var(--info); }
+.gt-toast__icon { font-size: 15px; font-weight: 700; }
+.gt-toast__msg { line-height: 1.4; }
+
+/* ---------------------------- Modal ---------------------------- */
+.gt-modal-open { overflow: hidden; }
+.gt-modal-overlay { position: fixed; inset: 0; z-index: 1300; background: var(--overlay); display: flex; align-items: center; justify-content: center; padding: 18px; animation: gt-fade 0.15s ease; }
+.gt-modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-lg); max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
+.gt-modal__head { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border-bottom: 1px solid var(--border); }
+.gt-modal__title { margin: 0; font-size: 17px; }
+.gt-modal__close { appearance: none; background: transparent; border: none; font-size: 24px; line-height: 1; color: var(--text-2); cursor: pointer; }
+.gt-modal__close:hover { color: var(--text); }
+.gt-modal__body { padding: 18px; overflow: auto; }
+@keyframes gt-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---------------------------- Donation ---------------------------- */
+.gt-donate-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 6px; }
+.gt-donate { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-subtle); }
+.gt-donate__meta { display: flex; flex-direction: column; gap: 4px; }
+.gt-donate__name { font-weight: 700; font-size: 14.5px; }
+.gt-donate__desc { font-size: 12px; color: var(--text-2); }
+/* 收款码底板始终为浅色，避免深色模式下反色导致无法扫描 */
+.gt-donate__qr { width: 168px; height: 168px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--qr-surface); }
+.gt-donate__img { width: 168px; height: 168px; object-fit: contain; padding: 8px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--qr-surface); }
+.gt-donate__placeholder { width: 168px; height: 168px; display: grid; place-items: center; text-align: center; font-size: 12px; color: var(--text-2); background: var(--surface-disabled); border: 1px dashed var(--border); border-radius: var(--radius-sm); padding: 12px; }
+.gt-donate__intro { margin: 0 0 8px; line-height: 1.7; font-size: 14px; }
+.gt-donate__tip { margin: 16px 0 0; font-size: 12px; color: var(--text-2); }
+
+/* ---------------------------- About ---------------------------- */
+.gt-about { display: flex; flex-direction: column; gap: 14px; line-height: 1.7; font-size: 14px; }
+.gt-about__sec { display: flex; flex-direction: column; gap: 4px; }
+.gt-about__sec p { margin: 0; }
+.gt-about__sec ul { margin: 4px 0 0; padding-left: 20px; }
+.gt-about__sec li { margin: 2px 0; }
+
+/* ---------------------------- Responsive ---------------------------- */
+@media (max-width: 860px) {
+  .gt-layout { flex-direction: column; }
+  .gt-sidebar {
+    width: 100%;
+    flex: 0 0 auto;
+    max-height: 38vh;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .gt-sidebar__nav { flex-direction: row; flex-wrap: wrap; gap: 4px; }
+  .gt-nav-group { flex-direction: row; flex-wrap: wrap; gap: 2px; }
+  /* 窄屏下分类标题转为行内小标签，而不是隐藏 —— 仍能区分分组 */
+  .gt-nav-group + .gt-nav-group { margin-top: 0; padding-top: 0; border-top: none; }
+  .gt-cat {
+    padding: 0 8px;
+    align-items: center;
+    border-left: 1px solid var(--border);
+    margin-left: 2px;
+  }
+  .gt-nav-group:first-child .gt-cat { border-left: none; }
+  .gt-main { padding: 16px; }
+  .gt-grid { grid-template-columns: 1fr; }
+  .gt-donate-grid { grid-template-columns: 1fr; }
+  .gt-brand__text p { display: none; }
+  .gt-segmented__label { display: none; }
+}

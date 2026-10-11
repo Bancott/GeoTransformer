@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+# 推送到 main 即自动构建并发布；也可在 Actions 页面手动触发。
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# GitHub Pages 官方部署所需的最小权限集
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一时间只跑一个部署；排队而不是取消，避免发布到一半的产物
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          # vite 8 要求 node ^20.19.0 || >=22.12.0
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck + build
+        run: npm run build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

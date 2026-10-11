@@ -1,0 +1,145 @@
+/**
+ * 主题 token 层 —— 只定义设计变量，不含任何组件样式。
+ *
+ * 约定：
+ * - 组件样式（main.css）**只允许**引用这里的变量，不得出现颜色字面量；
+ *   新增主题时只需在此追加一个 `[data-theme='xxx']` 覆盖块即可。
+ * - 变量按「语义」而非「颜色」命名（surface / border / text），
+ *   因此同一个变量在浅色与深色下可以指向完全不同的色值。
+ * - `--brand` / `--brand-fill` 分离：前者用于文字、边框、聚焦环（需与 surface 对比），
+ *   后者用于实心填充背景（需与 `--on-brand` 对比）。深色模式下二者取值不同，
+ *   混用会导致文字对比度不足。
+ * - 主题切换由 `src/ui/theme.ts` 写入 `<html data-theme="light|dark">`，
+ *   并由 index.html 中的内联脚本在首屏渲染前完成，避免闪白。
+ * - `color-scheme` 让原生控件（select、滚动条、日期选择器）跟随主题。
+ */
+
+:root {
+  /* ---------- 尺寸 / 圆角（与主题无关） ---------- */
+  --radius: 12px;
+  --radius-sm: 8px;
+
+  /* ---------- 底色层级 ---------- */
+  --bg: #f5f7fa;              /* 页面底色 */
+  --surface: #ffffff;         /* 卡片 / 面板 / 侧栏 */
+  --surface-subtle: #fafbfd;  /* 卡片内次级区块（表头、拖放区） */
+  --surface-sunken: #f6f7f9;  /* 嵌入卡片的凹陷区块（结果块、读数条） */
+  --surface-tint: #f4f9f5;    /* 主色淡染（悬停、行高亮） */
+  --surface-brand: #eef7f0;   /* 主色浓染（当前选中、激活） */
+  --surface-hover: #eef3f7;   /* 通用悬停底色 */
+  --surface-disabled: #f1f3f6;
+
+  /* ---------- 边框 ---------- */
+  --border: #e3e8ef;
+  --border-strong: #c9d2dd;
+  --border-dashed: #c6d0dc;
+  --border-tint: #d7ebd9;
+
+  /* ---------- 文字 ---------- */
+  --text: #1f2a37;
+  --text-2: #55627a;
+  --text-muted: #8b95a5;      /* 分组标签等弱化文字 */
+  --text-disabled: #9aa4b2;
+
+  /* ---------- 主色 ---------- */
+  --brand: #2f7d3a;           /* 文字 / 边框 / 聚焦环 */
+  --brand-fill: #2f7d3a;      /* 实心填充背景 */
+  --brand-fill-hover: #1f6b2c;
+  --on-brand: #ffffff;        /* 实心填充上的文字 */
+  --brand-soft: rgba(47, 125, 58, 0.12);
+  --brand-shadow: rgba(47, 125, 58, 0.35);
+  --brand-disabled: #8fb79a;
+
+  /* ---------- 强调色 / 语义色 ---------- */
+  --accent: #f0c040;
+  --accent-soft: rgba(240, 192, 64, 0.35);
+  --danger: #c9414a;          /* 文字 / 边框 */
+  --danger-fill: #c9414a;     /* 实心填充背景 */
+  --on-danger: #ffffff;
+  --info: #2b6fc0;
+
+  /* ---------- 捐赠 ---------- */
+  --donate-from: #e2645a;
+  --donate-to: #c9414a;
+  --heart: #ffd3d3;
+
+  /* ---------- 阴影 / 遮罩 ---------- */
+  --shadow-sm: 0 1px 3px rgba(18, 30, 51, 0.08), 0 6px 18px rgba(18, 30, 51, 0.05);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.25);
+  --overlay: rgba(16, 24, 40, 0.45);
+
+  /* ---------- 其他 ---------- */
+  --track: #e6eaf0;           /* 进度条底槽 */
+  --qr-surface: #ffffff;      /* 二维码 / 收款图底板：深色模式下也保持浅色，确保可扫描 */
+
+  /* ---------- 坐标系徽章（检测器） ---------- */
+  --sys-wgs84: #2f7d3a;
+  --sys-gcj02: #c06a2b;
+  --sys-bd09: #2b6fc0;
+  --sys-unknown: #8a8a8a;
+
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  /* ---------- 底色层级 ---------- */
+  --bg: #12161c;
+  --surface: #171c24;
+  --surface-subtle: #1c222b;
+  --surface-sunken: #141920;
+  --surface-tint: #17231b;
+  --surface-brand: #1d2f22;
+  --surface-hover: #232b36;
+  --surface-disabled: #1d232b;
+
+  /* ---------- 边框 ---------- */
+  --border: #2a323d;
+  --border-strong: #3a4553;
+  --border-dashed: #3f4a58;
+  --border-tint: #2c4433;
+
+  /* ---------- 文字 ---------- */
+  --text: #e6ebf2;
+  --text-2: #9aa7b8;
+  --text-muted: #7d8899;
+  --text-disabled: #6b7787;
+
+  /* ---------- 主色 ---------- */
+  --brand: #6cc47c;           /* 深底上作文字，需要更亮的绿 */
+  --brand-fill: #2f7d3a;      /* 实心按钮仍用饱和绿，保证白字对比度 */
+  --brand-fill-hover: #388f45;
+  --on-brand: #ffffff;
+  --brand-soft: rgba(108, 196, 124, 0.16);
+  --brand-shadow: rgba(0, 0, 0, 0.45);
+  --brand-disabled: #33512f;
+
+  /* ---------- 强调色 / 语义色 ---------- */
+  --accent: #e8c04c;
+  --accent-soft: rgba(232, 192, 76, 0.3);
+  --danger: #e0646d;
+  --danger-fill: #b8404a;
+  --on-danger: #ffffff;
+  --info: #62a3e8;
+
+  /* ---------- 捐赠 ---------- */
+  --donate-from: #c9584f;
+  --donate-to: #a83a44;
+  --heart: #ffd9d9;
+
+  /* ---------- 阴影 / 遮罩 ---------- */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 6px 18px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.55);
+  --overlay: rgba(0, 0, 0, 0.62);
+
+  /* ---------- 其他 ---------- */
+  --track: #2a323d;
+  --qr-surface: #ffffff;
+
+  /* ---------- 坐标系徽章（检测器） ---------- */
+  --sys-wgs84: #3f9a4e;
+  --sys-gcj02: #d2812f;
+  --sys-bd09: #4a8fd6;
+  --sys-unknown: #6b7787;
+
+  color-scheme: dark;
+}
